@@ -1,28 +1,33 @@
-import Identicon from 'react-identicons'
-import { setGlobalState, useGlobalState, truncate } from '../store'
-import { getConversations, loginWithCometChat, signUpWithCometChat } from '../utils/CometChat'
-import ChatList from './ChatList'
-import { useState } from 'react'
+import Identicon from "react-identicons";
+import { setGlobalState, useGlobalState, truncate } from "../store";
+import {
+  getConversations,
+  loginWithCometChat,
+  signUpWithCometChat,
+} from "../utils/CometChat";
+import ChatList from "./ChatList";
+import { useState } from "react";
+import { getItemsForSale } from "../utils/Wallet";
 
 const Hero = () => {
-  const [connectedAccount] = useGlobalState('connectedAccount')
-  const [currentUser] = useGlobalState('currentUser')
-  const [recentOpened] = useGlobalState('recentOpened')
-  const [conversations, setConversations] = useState([])
+  const [connectedAccount] = useGlobalState("connectedAccount");
+  const [currentUser] = useGlobalState("currentUser");
+  const [recentOpened] = useGlobalState("recentOpened");
+  const [conversations, setConversations] = useState([]);
 
   const onCreatedNFT = () => {
     setGlobalState('modal', 'scale-100')
-  }
+  };
 
   const onLaunchRecent = () => {
     if (currentUser?.uid.toLowerCase() != connectedAccount.toLowerCase())
-      return alert('Please login to receive chats from buyers!')
+      return alert("Please login to receive chats from buyers!");
 
     getConversations().then((convs) => {
-      setConversations(convs)
-      setGlobalState('recentOpened', true)
-    })
-  }
+      setConversations(convs);
+      setGlobalState("recentOpened", true);
+    });
+  };
 
   return (
     <div
@@ -76,7 +81,9 @@ const Hero = () => {
                       className="text-white border border-gray-500 
                     hover:border-[#e32970] hover:bg-[#bd255f] cursor-pointer 
                     rounded-full p-2 mx-3"
-                      onClick={() => signUpWithCometChat(connectedAccount, connectedAccount)}
+                      onClick={() =>
+                        signUpWithCometChat(connectedAccount, connectedAccount)
+                      }
                     >
                       Signup for Chat
                     </button>
@@ -117,7 +124,7 @@ const Hero = () => {
             string={
               connectedAccount
                 ? connectedAccount.toLowerCase()
-                : 'Connect Your Wallet'
+                : "Connect Your Wallet"
             }
             size={50}
             className="h-10 w-10 object-contain rounded-full mr-3"
@@ -126,7 +133,7 @@ const Hero = () => {
             <p className="text-white font-semibold">
               {connectedAccount
                 ? truncate(connectedAccount, 4, 4, 11)
-                : 'Connect Your Wallet'}
+                : "Connect Your Wallet"}
             </p>
             <small className="text-pink-800 font-bold">@you</small>
           </div>
@@ -135,8 +142,7 @@ const Hero = () => {
 
       {recentOpened ? <ChatList users={conversations} /> : null}
     </div>
-  )
-}
-
+  );
+};
 
 export default Hero;

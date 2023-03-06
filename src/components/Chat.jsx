@@ -1,48 +1,48 @@
-import Identicon from 'react-identicons'
-import { useGlobalState, setGlobalState, truncate } from '../store'
-import { sendMessage, CometChat } from '../CometChat'
-import { useEffect, useState } from 'react'
-import { FaTimes } from 'react-icons/fa'
+import Identicon from "react-identicons";
+import { useGlobalState, setGlobalState, truncate } from "../store";
+import { sendMessage, CometChat } from "../CometChat";
+import { useEffect, useState } from "react";
+import { FaTimes } from "react-icons/fa";
 
 const Chat = ({ receiver, chats }) => {
-  const [connectedAccount] = useGlobalState('connectedAccount')
-  const [message, setMessage] = useState('')
-  const [messages, setMessages] = useState(chats)
+  const [connectedAccount] = useGlobalState("connectedAccount");
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState(chats);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     sendMessage(receiver, message).then((msg) => {
-      setMessages((prevState) => [...prevState, msg])
-      setMessage('')
-      scrollToEnd()
-    })
-  }
+      setMessages((prevState) => [...prevState, msg]);
+      setMessage("");
+      scrollToEnd();
+    });
+  };
 
   const listenForMessage = (listenerID) => {
     CometChat.addMessageListener(
       listenerID,
       new CometChat.MessageListener({
         onTextMessageReceived: (message) => {
-          setMessages((prevState) => [...prevState, message])
-          scrollToEnd()
+          setMessages((prevState) => [...prevState, message]);
+          scrollToEnd();
         },
       })
-    )
-  }
+    );
+  };
 
   const onClose = () => {
-    setGlobalState('chatOpened', false)
-    setGlobalState('recentChatOpened', false)
-  }
+    setGlobalState("chatOpened", false);
+    setGlobalState("recentChatOpened", false);
+  };
 
   const scrollToEnd = () => {
-    const element = document.getElementById('messages-container')
-    element.scrollTop = element.scrollHeight
-  }
+    const element = document.getElementById("messages-container");
+    element.scrollTop = element.scrollHeight;
+  };
 
   useEffect(() => {
-    listenForMessage(receiver)
-  }, [receiver])
+    listenForMessage(receiver);
+  }, [receiver]);
 
   return (
     <div
@@ -61,7 +61,9 @@ const Chat = ({ receiver, chats }) => {
                   className="h-full w-full object-cover cursor-pointer rounded-full"
                 />
               </div>
-              <p className="font-bold">@{receiver ? truncate(receiver, 4, 4, 11) : '...'}</p>
+              <p className="font-bold">
+                @{receiver ? truncate(receiver, 4, 4, 11) : "..."}
+              </p>
             </div>
             <button
               type="button"
@@ -84,7 +86,7 @@ const Chat = ({ receiver, chats }) => {
                 >
                   <div className="flex flex-col justify-start items-start">
                     <h4 className="text-[#e32970]">
-                      @{receiver ? truncate(receiver, 4, 4, 11) : '...'}
+                      @{receiver ? truncate(receiver, 4, 4, 11) : "..."}
                     </h4>
                     <p className="text-xs">{msg.text}</p>
                   </div>
@@ -121,7 +123,7 @@ const Chat = ({ receiver, chats }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;

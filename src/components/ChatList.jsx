@@ -1,18 +1,18 @@
 // import Chat from './Chat'
-import Moment from 'react-moment'
-import { useState } from 'react'
-import { FaTimes } from 'react-icons/fa'
-import { setGlobalState, truncate, useGlobalState } from '../store'
-import { getMessages } from '../utils/CometChat'
+import Moment from "react-moment";
+import { useState } from "react";
+import { FaTimes } from "react-icons/fa";
+import { setGlobalState, truncate, useGlobalState } from "../store";
+import { getMessages } from "../utils/CometChat";
 
 const ChatList = ({ users }) => {
-  const [messages, setMessages] = useState([])
-  const [receiver, setReceiver] = useState('')
-  const [recentChatOpened] = useGlobalState('recentChatOpened')
-  const [connectedAccount] = useGlobalState('connectedAccount')
+  const [messages, setMessages] = useState([]);
+  const [receiver, setReceiver] = useState("");
+  const [recentChatOpened] = useGlobalState("recentChatOpened");
+  const [connectedAccount] = useGlobalState("connectedAccount");
 
   const onEnterChat = (receiver) => {
-    setReceiver(receiver)
+    setReceiver(receiver);
     getMessages(receiver).then((msgs) => {
       setMessages(
         msgs.filter((msg) => {
@@ -21,12 +21,12 @@ const ChatList = ({ users }) => {
             !!!msg?.action &&
             msg?.conversationId ==
               `${msg?.rawMessage.receiver}_user_${msg?.rawMessage.sender}`
-          )
+          );
         })
-      )
-      setGlobalState('recentChatOpened', true)
-    })
-  }
+      );
+      setGlobalState("recentChatOpened", true);
+    });
+  };
 
   return (
     <div>
@@ -44,7 +44,7 @@ const ChatList = ({ users }) => {
                 <p className="font-semibold text-gray-400">Conversations</p>
                 <button
                   type="button"
-                  onClick={() => setGlobalState('recentOpened', false)}
+                  onClick={() => setGlobalState("recentOpened", false)}
                   className="border-0 bg-transparent focus:outline-none"
                 >
                   <FaTimes />
@@ -65,9 +65,7 @@ const ChatList = ({ users }) => {
                       <h4 className="text-sm text-[#e32970] font-semiBold">
                         @{truncate(user?.lastMessage.sender.uid, 4, 4, 11)}
                       </h4>
-                      <p className="text-xs">
-                        {user?.lastMessage.text}
-                      </p>
+                      <p className="text-xs">{user?.lastMessage.text}</p>
                     </div>
 
                     <Moment
@@ -84,7 +82,7 @@ const ChatList = ({ users }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ChatList
+export default ChatList;

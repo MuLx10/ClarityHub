@@ -1,21 +1,20 @@
-import { CometChat } from '@cometchat-pro/chat';
+import { CometChat } from "@cometchat-pro/chat";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
-import { cometConfig } from './utils/config/comet-config';
+import { cometConfig } from "./utils/config/comet-config";
 
+const appID = cometConfig.COMET_APP_ID;
+const region = cometConfig.COMET_APP_REGION;
 
-const appID = cometConfig.COMET_APP_ID
-const region = cometConfig.COMET_APP_REGION
-
-console.log(appID)
+console.log(appID);
 
 const appSetting = new CometChat.AppSettingsBuilder()
   .subscribePresenceForAllUsers()
   .setRegion(region)
-  .build()
+  .build();
 
 CometChat.init(appID, appSetting)
   .then(() => {
@@ -23,10 +22,10 @@ CometChat.init(appID, appSetting)
       <BrowserRouter>
         <App />
       </BrowserRouter>,
-      document.getElementById('root')
-    )
-    console.log('Initialization completed successfully')
+      document.getElementById("root")
+    );
+    console.log("Initialization completed successfully");
   })
   .catch((error) => {
-    console.log('Initialization failed with error:', error)
-  })
+    console.log("Initialization failed with error:", error);
+  });

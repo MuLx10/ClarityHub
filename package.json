@@ -11,6 +11,7 @@
   "dependencies": {
     "@cometchat-pro/chat": "^3.0.11",
     "@stacks/connect": "^7.1.1",
+    "@stacks/connect-react": "^21.0.1",
     "@stacks/network": "^6.1.1",
     "@stacks/transactions": "^6.2.0",
     "firebase": "^9.17.2",

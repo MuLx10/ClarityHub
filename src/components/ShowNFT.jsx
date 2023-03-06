@@ -1,7 +1,7 @@
 import Identicon from "react-identicons";
 import { FaTimes } from "react-icons/fa";
 import { useGlobalState, setGlobalState, truncate, setAlert } from "../store";
-import { buyNFT } from "../utils/Wallet";
+// import { buyNFT } from "../utils/Wallet";
 
 const ShowNFT = () => {
   const [showModal] = useGlobalState("showModal");
@@ -21,7 +21,7 @@ const ShowNFT = () => {
     });
 
     try {
-      await buyNFT(nft);
+      // await buyNFT(nft);
       setAlert("Transfer completed...", "green");
       window.location.reload();
     } catch (error) {
@@ -36,7 +36,7 @@ const ShowNFT = () => {
           justify-center bg-black bg-opacity-50 transform
           transition-transform duration-300 ${showModal}`}
     >
-      <div className="bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl w-11/12 md:w-2/5 h-7/12 p-6">
+      <div className="bg-[#151c25] shadow-lg shadow-[#e32970] rounded-xl w-11/12 md:w-2/5 h-8/12 p-6">
         <div className="flex flex-col">
           <div className="flex flex-row justify-between items-center">
             <p className="font-semibold text-gray-400">Buy NFT</p>
@@ -50,8 +50,8 @@ const ShowNFT = () => {
           </div>
 
           <div className="flex flex-row justify-center items-center rounded-xl mt-5">
-            <div className="shrink-0 rounded-xl overflow-hidden h-40 w-40">
-              <img
+            <div className="shrink-0 rounded-xl overflow-hidden ">
+              <iframe
                 className="h-full w-full object-cover cursor-pointer"
                 src={nft?.metadataURI}
                 alt={nft?.title}

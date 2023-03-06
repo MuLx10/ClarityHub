@@ -4,12 +4,18 @@ import {
   showConnect,
   openContractCall,
 } from "@stacks/connect";
-import { StacksMocknet } from "@stacks/network";
-import { ClarityType, stringUtf8CV } from "@stacks/transactions";
+import { StacksMocknet, StacksTestnet } from "@stacks/network";
+import {
+  callReadOnlyFunction,
+  ClarityType,
+  stringUtf8CV,
+  uintCV,
+} from "@stacks/transactions";
 import { setGlobalState, getGlobalState, setAlert } from "../store";
-import { ClarityValue, deserializeCV } from '@stacks/transactions';
-import { clarity } from "./clarity";
-import { CONTRACT_NAME } from "./config/constants";
+import { ClarityValue, deserializeCV } from "@stacks/transactions";
+// import { clarity } from "./clarity";
+import { CONTRACT_NAME, CONTRACT_ADDRESS } from "./config/constants";
+import { useConnect } from "@stacks/connect-react";
 
 const appConfig = new AppConfig(["store_write"]);
 const userSession = new UserSession({ appConfig });
@@ -20,8 +26,8 @@ const appDetails = {
 
 const network = new StacksMocknet();
 
-let contractAddress = null;
-let contractName = CONTRACT_NAME
+let contractAddress = CONTRACT_ADDRESS;
+let contractName = CONTRACT_NAME;
 
 const connectWallet = () => {
   showConnect({
@@ -34,9 +40,11 @@ const connectWallet = () => {
       } else if (userSession.isUserSignedIn()) {
         setGlobalState(
           "connectedAccount",
-          userSession.loadUserData().identityAddress
+          userSession.loadUserData().profile.stxAddress.testnet
         );
       }
+
+      setTimeout(() => getItemsForSale(), 1000);
       // const { doContractCall } = useConnect();
       //   window.location.reload();
     },
@@ -44,50 +52,88 @@ const connectWallet = () => {
   });
 };
 
-const buyNFT = async ({ id, cost }) => {
-  try {
-    const buyer = getGlobalState("connectedAccount");
+const listNewItem = async (title, description, price, metadataURI) => {
+  // const { doContractCall } = useConnect();
 
-    return true;
-  } catch (error) {
-    reportError(error);
-  }
-};
-
-
-const listNewItem = async (
-  title,
-  description,
-  price,
-  metadataURI
-) => {
   const account = getGlobalState("connectedAccount");
   const timestamp = Date.now();
 
-  console.log({title, description, price, metadataURI})
+  console.log({ title, description, price, metadataURI });
 
   const response = await openContractCall({
-    contractAddress,
-    contractName,
-    functionName: "list-item",
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: CONTRACT_NAME,
+    functionName: "add-item",
     functionArgs: [
-      ClarityType.StringUTF8(title),
-      clarity.encodeString(title),
-      clarity.encodeString(description),
-      clarity.encodeBigUInt(parseInt(price)),
-      clarity.encodeBigUInt(timestamp),
-      clarity.encodeString(metadataURI),
+      stringUtf8CV(title),
+      stringUtf8CV(description),
+      uintCV(price),
+      uintCV(timestamp),
+      stringUtf8CV(metadataURI),
     ],
     sender: account,
-    postConditionMode: 0,
-    network,
+    network: new StacksTestnet(),
     appDetails,
+    onFinish: (data) => {
+      console.log("onFinish:", data);
+    },
+    onCancel: () => {
+      console.log("onCancel:", "Transaction was canceled");
+    },
   });
   console.log(response);
+};
 
-  const result = deserializeCV(result).value;
-  
-  console.log(result);
+const getItemsForSale = async () => {
+  const items = [];
+  const account = getGlobalState("connectedAccount");
+  const response = await callReadOnlyFunction({
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: CONTRACT_NAME,
+    functionName: "get-nonce",
+    functionArgs: [],
+    senderAddress: account,
+    network: new StacksTestnet(),
+  });
+
+  if (response.value) {
+    const count = parseInt(response.value);
+    console.log(count);
+    for (let i = 1; i <= count; i++) {
+      try {
+        const responseItem = await callReadOnlyFunction({
+          contractAddress: CONTRACT_ADDRESS,
+          contractName: CONTRACT_NAME,
+          functionName: "get-item",
+          functionArgs: [uintCV(i)],
+          senderAddress: account,
+          network: new StacksTestnet(),
+        });
+
+        if (responseItem.value.data) {
+          const data = responseItem.value.data;
+
+          console.log(data);
+          
+          const item = {
+            id: i,
+            owner: data.owner.address.hash160,
+            cost: parseInt(data.price.value),
+            title: data.name.data,
+            description: data.description.data,
+            metadataURI: data.url.data,
+            timestamp: data.timestamp.value,
+          };
+
+          items.push(item);
+        }
+      } catch (error) {
+        // console.error(error);
+      }
+    }
+  }
+  console.log(items)
+  setGlobalState("nfts", items);
 };
 
 const buyItem = async (sellerAddress, id, quantity) => {
@@ -125,42 +171,15 @@ const cancelListing = async (id) => {
   console.log(response);
 };
 
-const getItemsForSale = async () => {
-  const items = [];
-  const state = await clarity.getState(contractAddress);
-  for (const [sellerAddress, itemIDs] of Object.entries(state.marketState)) {
-    for (const [itemID, itemData] of Object.entries(itemIDs)) {
-      const title = clarity.decodeBigUInt(itemData[0]).toString();
-      const description = clarity.decodeInt(itemData[1]).toString();
-      const cost = clarity.decodeInt(itemData[2]).toString();
-      const stock = clarity.decodeInt(itemData[3]).toString();
-      const metadataURI = clarity.decodeInt(itemData[3]).toString();
-      const timestamp = clarity.decodeInt(itemData[3]).toString();
-      items.push({
-        title,
-        description,
-        sellerAddress,
-        itemID,
-        cost,
-        stock,
-        metadataURI,
-        timestamp,
-      });
-    }
-  }
-
-  setGlobalState("nfts", structuredNfts(nfts));
-};
-
 const structuredNfts = (nfts) => {
   return nfts
     .map((nft) => ({
-      id: Number(nft.itemID),
+      id: Number(id),
       owner: nft.sellerAddress,
-      cost: nft.cost,
+      cost: nft.price,
       title: nft.title,
       description: nft.description,
-      metadataURI: nft.metadataURI,
+      metadataURI: nft.url,
       timestamp: nft.timestamp,
     }))
     .reverse();
@@ -171,16 +190,9 @@ const reportError = (error) => {
   throw new Error("No ethereum object.");
 };
 
-const initContract = (contractName) => {
-  clarity.contractAddress(contractName).then((address) => {
-    contractAddress = address;
-  });
-};
 
 export {
-  initContract,
   connectWallet,
-  buyNFT,
   getItemsForSale,
   listNewItem,
   buyItem,
