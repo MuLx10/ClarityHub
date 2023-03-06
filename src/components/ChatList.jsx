@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { setGlobalState, truncate, useGlobalState } from "../store";
 import { getMessages } from "../utils/CometChat";
+import Chat from "./Chat";
 
 const ChatList = ({ users }) => {
   const [messages, setMessages] = useState([]);

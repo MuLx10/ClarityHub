@@ -58,8 +58,8 @@
               (if (not (is-ok tx-result)) 
               (err "Payment transfer failed")
               (begin
-                    (map-set store { id: id } { name: (get name item), description: (get description item), price: item-price, stock: (get stock item), owner: tx-sender, timestamp: (get timestamp item), url: (get url item) })
-                    (ok "Item purchased successfully"))
+                (map-set store { id: id } { name: (get name item), description: (get description item), price: item-price, stock: (get stock item), owner: tx-sender, timestamp: (get timestamp item), url: (get url item) })
+                (ok "Item purchased successfully"))
               ))
             ))
           (err "Price is less than the item price")))))

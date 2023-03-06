@@ -8,6 +8,8 @@ import { StacksMocknet, StacksTestnet } from "@stacks/network";
 import {
   callReadOnlyFunction,
   ClarityType,
+  standardPrincipalCV,
+  standardPrincipalCVFromAddress,
   stringUtf8CV,
   uintCV,
 } from "@stacks/transactions";
@@ -16,6 +18,7 @@ import { ClarityValue, deserializeCV } from "@stacks/transactions";
 // import { clarity } from "./clarity";
 import { CONTRACT_NAME, CONTRACT_ADDRESS } from "./config/constants";
 import { useConnect } from "@stacks/connect-react";
+import { principalToString } from "@stacks/transactions/dist/clarity/types/principalCV";
 
 const appConfig = new AppConfig(["store_write"]);
 const userSession = new UserSession({ appConfig });
@@ -114,10 +117,10 @@ const getItemsForSale = async () => {
           const data = responseItem.value.data;
 
           console.log(data);
-          
+
           const item = {
             id: i,
-            owner: data.owner.address.hash160,
+            owner: principalToString(data.owner),
             cost: parseInt(data.price.value),
             title: data.name.data,
             description: data.description.data,
@@ -128,11 +131,11 @@ const getItemsForSale = async () => {
           items.push(item);
         }
       } catch (error) {
-        // console.error(error);
+        console.error(error);
       }
     }
   }
-  console.log(items)
+  console.log(items);
   setGlobalState("nfts", items);
 };
 
@@ -190,11 +193,4 @@ const reportError = (error) => {
   throw new Error("No ethereum object.");
 };
 
-
-export {
-  connectWallet,
-  getItemsForSale,
-  listNewItem,
-  buyItem,
-  cancelListing,
-};
+export { connectWallet, getItemsForSale, listNewItem, buyItem, cancelListing };

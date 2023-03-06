@@ -1,6 +1,6 @@
 import Identicon from "react-identicons";
 import { useGlobalState, setGlobalState, truncate } from "../store";
-import { sendMessage, CometChat } from "../CometChat";
+import { sendMessage, CometChat } from "../utils/CometChat";
 import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 

@@ -16,7 +16,7 @@ const Hero = () => {
   const [conversations, setConversations] = useState([]);
 
   const onCreatedNFT = () => {
-    setGlobalState('modal', 'scale-100')
+    setGlobalState("modal", "scale-100");
   };
 
   const onLaunchRecent = () => {
