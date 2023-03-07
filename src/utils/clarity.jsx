@@ -3,16 +3,19 @@ import {
   deserializeCV,
   ClarityType,
   createAddress,
+  makeContractCall,
 } from "@stacks/transactions";
 
 import { StacksTestnet } from "@stacks/network";
 
+const local = false;
+const STACKS_CORE_API_URL = "https://stacks-node-api.testnet.stacks.co";
 
 const network = new StacksTestnet();
 
 export const clarity = {
   contractAddress: async (contractName) => {
-    const address = await makeReadOnlyCallAsync({
+    const address = await makeContractCall({
       contractAddress: createAddress(contractName, "st00000000000000000000001"),
       contractName: "contracts",
       functionName: "get-address",

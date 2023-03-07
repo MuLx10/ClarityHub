@@ -11,7 +11,7 @@ plan:
         - contract-publish:
             contract-name: ClarityHub
             expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            cost: 26470
+            cost: 26880
             path: "contracts\\ClarityHub.clar"
             anchor-block-only: true
             clarity-version: 1

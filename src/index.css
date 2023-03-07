@@ -21,7 +21,7 @@ body {
       transparent 50%
     ),
     radial-gradient(at 50% 0%, hsl(0, 19%, 75%) 0, transparent 50%),
-    radial-gradient(at 100% 0%, rgb(224, 126, 160) 0, transparent 50%);
+    radial-gradient(at 100% 0%, rgb(228, 226, 82) 0, transparent 50%);
 }
 
 .gradient-bg-artworks {

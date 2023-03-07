@@ -19,6 +19,7 @@ import { ClarityValue, deserializeCV } from "@stacks/transactions";
 import { CONTRACT_NAME, CONTRACT_ADDRESS } from "./config/constants";
 import { useConnect } from "@stacks/connect-react";
 import { principalToString } from "@stacks/transactions/dist/clarity/types/principalCV";
+import { loginWithCometChat } from "./CometChat";
 
 const appConfig = new AppConfig(["store_write"]);
 const userSession = new UserSession({ appConfig });
@@ -27,7 +28,7 @@ const appDetails = {
   icon: "https://freesvg.org/img/1541103084.png",
 };
 
-const network = new StacksMocknet();
+const network = new StacksTestnet();
 
 let contractAddress = CONTRACT_ADDRESS;
 let contractName = CONTRACT_NAME;
@@ -47,7 +48,15 @@ const connectWallet = () => {
         );
       }
 
-      setTimeout(() => getItemsForSale(), 1000);
+      setTimeout(() => {
+        const account = getGlobalState("connectedAccount");
+        try {
+          loginWithCometChat(account);
+        } catch (error) {}
+
+        getItemsForSale();
+
+      }, 1000);
       // const { doContractCall } = useConnect();
       //   window.location.reload();
     },
@@ -75,7 +84,7 @@ const listNewItem = async (title, description, price, metadataURI) => {
       stringUtf8CV(metadataURI),
     ],
     sender: account,
-    network: new StacksTestnet(),
+    network,
     appDetails,
     onFinish: (data) => {
       console.log("onFinish:", data);
@@ -96,7 +105,7 @@ const getItemsForSale = async () => {
     functionName: "get-nonce",
     functionArgs: [],
     senderAddress: account,
-    network: new StacksTestnet(),
+    network,
   });
 
   if (response.value) {
@@ -110,7 +119,7 @@ const getItemsForSale = async () => {
           functionName: "get-item",
           functionArgs: [uintCV(i)],
           senderAddress: account,
-          network: new StacksTestnet(),
+          network,
         });
 
         if (responseItem.value.data) {
@@ -139,22 +148,26 @@ const getItemsForSale = async () => {
   setGlobalState("nfts", items);
 };
 
-const buyItem = async (sellerAddress, id, quantity) => {
+const buyItem = async (id, price) => {
   const buyer = getGlobalState("connectedAccount");
 
   const response = await openContractCall({
-    contractAddress,
-    contractName,
-    functionName: "buy-item",
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: CONTRACT_NAME,
+    functionName: "purchase-item",
     functionArgs: [
-      clarity.decodePrincipal(sellerAddress),
-      clarity.encodeInt(parseInt(id)),
-      clarity.encodeInt(parseInt(quantity)),
+      uintCV(parseInt(id)),
+      uintCV(parseInt(price)),
     ],
     sender: buyer,
-    postConditionMode: 0,
     network,
     appDetails,
+    onFinish: (data) => {
+      console.log("onFinish:", data);
+    },
+    onCancel: () => {
+      console.log("onCancel:", "Transaction was canceled");
+    },
   });
   console.log(response);
 };

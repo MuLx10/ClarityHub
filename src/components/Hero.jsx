@@ -50,7 +50,7 @@ const Hero = () => {
             <>
               <button
                 className="shadow-xl shadow-black text-white
-                bg-[#e32970] hover:bg-[#bd255f]
+                bg-[#003B73] hover:bg-[#60A3D9]
                 rounded-full cursor-pointer p-2"
                 onClick={onCreatedNFT}
               >
@@ -61,7 +61,7 @@ const Hero = () => {
                 connectedAccount.toLowerCase() ? (
                   <button
                     className="text-white border border-gray-500 
-                    hover:border-[#e32970] hover:bg-[#bd255f] cursor-pointer 
+                    hover:border-[#003B73] hover:bg-[#60A3D9] cursor-pointer 
                     rounded-full p-2 mx-3"
                     onClick={onLaunchRecent}
                   >
@@ -71,7 +71,7 @@ const Hero = () => {
                   <>
                     <button
                       className="text-white border border-gray-500 
-                    hover:border-[#e32970] hover:bg-[#bd255f] cursor-pointer 
+                    hover:border-[#003B73] hover:bg-[#60A3D9] cursor-pointer 
                     rounded-full p-2 mx-3"
                       onClick={() => loginWithCometChat(connectedAccount)}
                     >
@@ -79,7 +79,7 @@ const Hero = () => {
                     </button>
                     <button
                       className="text-white border border-gray-500 
-                    hover:border-[#e32970] hover:bg-[#bd255f] cursor-pointer 
+                    hover:border-[#003B73] hover:bg-[#60A3D9] cursor-pointer 
                     rounded-full p-2 mx-3"
                       onClick={() =>
                         signUpWithCometChat(connectedAccount, connectedAccount)

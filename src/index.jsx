@@ -9,8 +9,6 @@ import { cometConfig } from "./utils/config/comet-config";
 const appID = cometConfig.COMET_APP_ID;
 const region = cometConfig.COMET_APP_REGION;
 
-console.log(appID);
-
 const appSetting = new CometChat.AppSettingsBuilder()
   .subscribePresenceForAllUsers()
   .setRegion(region)

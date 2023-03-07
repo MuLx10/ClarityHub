@@ -50,7 +50,7 @@ const Chat = ({ receiver, chats }) => {
       justify-center bg-black bg-opacity-50 transform
       transition-transform duration-300 scale-100`}
     >
-      <div className="bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl w-5/6 h-5/6 p-6">
+      <div className="bg-[#151c25] shadow-xl shadow-[#003B73] rounded-xl w-5/6 h-5/6 p-6">
         <div className="flex flex-col text-gray-400">
           <div className="flex flex-row justify-between items-center">
             <div className="flex flex-row justify-center items-center">
@@ -85,7 +85,7 @@ const Chat = ({ receiver, chats }) => {
                   className="flex flex-row justify-start items-center mt-5"
                 >
                   <div className="flex flex-col justify-start items-start">
-                    <h4 className="text-[#e32970]">
+                    <h4 className="text-[#003B73]">
                       @{receiver ? truncate(receiver, 4, 4, 11) : "..."}
                     </h4>
                     <p className="text-xs">{msg.text}</p>
@@ -97,7 +97,7 @@ const Chat = ({ receiver, chats }) => {
                   className="flex flex-row justify-end items-center mt-5"
                 >
                   <div className="flex flex-col justify-start items-end">
-                    <h4 className="text-[#e32970]">@you</h4>
+                    <h4 className="text-[#003B73]">@you</h4>
                     <p className="text-xs">{msg.text}</p>
                   </div>
                 </div>

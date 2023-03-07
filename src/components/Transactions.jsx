@@ -47,7 +47,7 @@ const Transactions = () => {
                 </small>
               </div>
 
-              <p className="text-sm font-medium">{tx.cost}ETH</p>
+              <p className="text-sm font-medium">{tx.cost}STX</p>
             </div>
           ))}
         </div>
@@ -56,7 +56,7 @@ const Transactions = () => {
           <div className="text-center my-5">
             <button
               className="shadow-xl shadow-black text-white
-            bg-[#e32970] hover:bg-[#bd255f]
+            bg-[#003B73] hover:bg-[#60A3D9]
             rounded-full cursor-pointer p-2"
               onClick={() => setEnd(end + count)}
             >

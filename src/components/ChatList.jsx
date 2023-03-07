@@ -39,7 +39,7 @@ const ChatList = ({ users }) => {
         justify-center bg-black bg-opacity-50 transform
         transition-transform duration-300 scale-100`}
         >
-          <div className="bg-[#151c25] shadow-xl shadow-[#e32970] rounded-xl w-11/12 md:w-2/5 h-7/12 p-6">
+          <div className="bg-[#151c25] shadow-xl shadow-[#003B73] rounded-xl w-11/12 md:w-2/5 h-7/12 p-6">
             <div className="flex flex-col text-gray-400">
               <div className="flex flex-row justify-between items-center">
                 <p className="font-semibold text-gray-400">Conversations</p>
@@ -63,7 +63,7 @@ const ChatList = ({ users }) => {
                     onClick={() => onEnterChat(user?.lastMessage.sender.uid)}
                   >
                     <div className="flex flex-col text-left">
-                      <h4 className="text-sm text-[#e32970] font-semiBold">
+                      <h4 className="text-sm text-[#003B73] font-semiBold">
                         @{truncate(user?.lastMessage.sender.uid, 4, 4, 11)}
                       </h4>
                       <p className="text-xs">{user?.lastMessage.text}</p>

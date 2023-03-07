@@ -16,9 +16,9 @@ const Artworks = () => {
   }, [nfts, end]);
 
   return (
-    <div className="bg-[#151c25] gradient-bg-artworks">
+    <div className="bg-[#15251c] gradient-bg-artworks">
       <div className="w-4/5 py-10 mx-auto">
-        <h4 className="text-white text-3xl font-bold uppercase text-gradient">
+        <h4 className="text-white text-3xl font-bold uppercase">
           {collection.length > 0 ? "Latest Artworks" : "No Artworks Yet"}
         </h4>
 
@@ -32,7 +32,7 @@ const Artworks = () => {
           <div className="text-center my-5">
             <button
               className="shadow-xl shadow-black text-white
-            bg-[#e32970] hover:bg-[#bd255f]
+            bg-[#003B73] hover:bg-[#60A3D9]
             rounded-full cursor-pointer p-2"
               onClick={() => setEnd(end + count)}
             >
@@ -63,12 +63,12 @@ const Card = ({ nft }) => {
       <div className="flex justify-between items-center mt-3 text-white">
         <div className="flex flex-col">
           <small className="text-xs">Current Price</small>
-          <p className="text-sm font-semibold">{nft.cost} ETH</p>
+          <p className="text-sm font-semibold">{nft.cost} STX</p>
         </div>
 
         <button
-          className="shadow-lg shadow-black text-white text-sm bg-[#e32970]
-            hover:bg-[#bd255f] cursor-pointer rounded-full px-1.5 py-1"
+          className="shadow-lg shadow-black text-white text-sm bg-[#003B73]
+            hover:bg-[#60A3D9] cursor-pointer rounded-full px-1.5 py-1"
           onClick={setNFT}
         >
           View Details

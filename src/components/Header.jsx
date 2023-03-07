@@ -1,4 +1,4 @@
-import timelessLogo from "../assets/timeless.png";
+import clarityHubLogo from "../assets/timeless.png";
 import { useGlobalState, truncate } from "../store";
 import { connectWallet } from "../utils/Wallet";
 
@@ -6,12 +6,18 @@ const Header = () => {
   const [connectedAccount] = useGlobalState("connectedAccount");
   return (
     <nav className="w-4/5 flex md:justify-center justify-between items-center py-4 mx-auto">
-      <div className="md:flex-[0.5] flex-initial justify-center items-center">
+      <div className="md:flex-[0.5] flex-initial justify-center ">
+        <div className="flex align-center items-center">
         <img
-          className="w-16 cursor-pointer"
-          src={timelessLogo}
-          alt="Timeless Logo"
+          className="w-12 h-12 cursor-pointer"
+          src={clarityHubLogo}
+          alt="Clarity Logo"
         />
+        <h1 className="text-white text-3xl m-3">
+            Clarity<b>Hub</b>
+          </h1>
+        </div>
+          
       </div>
 
       <ul
@@ -29,7 +35,7 @@ const Header = () => {
         <>
           <button
             className="shadow-xl shadow-black text-white
-        bg-[#e3297077] hover:bg-[#bd255f77] md:text-s p-3
+        bg-[#003B73] hover:bg-[#60A3D9] md:text-s p-3
           rounded-full cursor-pointer"
           >
             {truncate(connectedAccount, 4, 4, 11)}
@@ -38,7 +44,7 @@ const Header = () => {
       ) : (
         <button
           className="shadow-xl shadow-black text-white
-        bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2
+        bg-[#003B73] hover:bg-[#60A3D9] md:text-xs p-2
           rounded-full cursor-pointer"
           onClick={connectWallet}
         >

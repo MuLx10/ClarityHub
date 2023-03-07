@@ -7,7 +7,7 @@
     stock: uint,
     owner: principal,
     timestamp: uint,
-    url: (string-utf8 50)} )
+    url: (string-utf8 150)} )
 
 
 (define-read-only (get-item (id uint))
@@ -27,7 +27,7 @@
     (description (string-utf8 300))
     (price uint)
     (timestamp uint)
-    (url (string-utf8 50)))
+    (url (string-utf8 150)))
   (if (or (<= (len name) u0) (> (len name) u50))
       (err "Name must be between 1 and 50 characters long")
       (if (or (> (len description) u300))
