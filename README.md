@@ -1,5 +1,20 @@
 # ClarityHub
 
+## Setup & Run
+
+```bash
+  $ git clone https://github.com/MuLx10/ClarityHub
+  $ cd ClarityHub
+  $ npm install
+```
+
+```bash
+  $ npm start
+```
+Point your favourite browser to [locahost:3000](http://locahost:3000/)
+
+Or Visit [ClarityHub](https://clarity-hub.netlify.app/)
+
 ## Inspiration 💡
 ClarityHub was born out of a need for a decentralized, transparent, and secure platform for buying and selling products and services. ClarityHub offers buyers and sellers a direct communication channel via chat, creating a more efficient, trustworthy, and easy-to-use marketplace.
 
@@ -22,7 +37,7 @@ ClarityHub is built on top of the Ethereum blockchain network. The front end is 
 
 ## Accomplishments that we're proud of 🏆
 We are proud of creating a secure and transparent platform for buying and selling products and services. We are also proud of integrating the chat functionality, which provides a more efficient and transparent buying process.
-
+ClarityHub
 ## What's next for ClarityHub 🚀
 In the future, we plan to add more features to ClarityHub, such as auctions, escrow services, and dispute resolution mechanisms. We also plan to expand the platform to support more cryptocurrencies and tokens. Our ultimate goal is to create a decentralized and transparent e-commerce ecosystem that benefits both buyers and sellers.
 
@@ -33,3 +48,9 @@ Have a beautiful day 😊
 ## Other details
 **Stack Wallet**: `STVKW70NK7Y782WTQC9689BP2NKJ18D1RNY6KS0X`
 
+## Snaps
+
+![1](https://user-images.githubusercontent.com/23444642/223558488-b1709a41-1f19-480e-8e0e-2f1c5707d082.png)
+![2](https://user-images.githubusercontent.com/23444642/223558511-755b81d9-0f0b-404b-9fde-25a112780e6f.png)
+![3](https://user-images.githubusercontent.com/23444642/223558520-5bfc6ff7-caa9-4048-99db-dfb88ad35b7d.png)
+![4](https://user-images.githubusercontent.com/23444642/223558533-1cbde130-ffb2-4307-95db-e2f29d9da10b.png)
